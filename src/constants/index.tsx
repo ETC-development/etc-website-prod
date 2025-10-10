@@ -57,4 +57,5 @@ export const Departements = [
         managers: "Douaa and Kaouter",
         limit: null
     }
+    
 ]
