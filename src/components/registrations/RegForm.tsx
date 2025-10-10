@@ -326,16 +326,16 @@ export default function RegistrationForm() {
                     <div className="relative max-w-6xl mx-auto">
                         <Swiper
                             onSwiper={setFirstSwiper}
-                            controller={{ control: firstSwiper }}
                             slidesPerView={1}
-                            spaceBetween={20}
+                            spaceBetween={30}
                             centeredSlides={true}
-                            loop={true}
-                            speed={800}
+                            loop={Departements.length > 1}
+                            speed={600}
+                            allowTouchMove={true}
                             breakpoints={{
                                 640: {
                                     slidesPerView: 1,
-                                    spaceBetween: 20,
+                                    spaceBetween: 30,
                                     centeredSlides: true,
                                 },
                                 768: {
@@ -344,13 +344,13 @@ export default function RegistrationForm() {
                                     centeredSlides: true,
                                 },
                                 1024: {
-                                    slidesPerView: 1.8,
-                                    spaceBetween: 40,
+                                    slidesPerView: 1,
+                                    spaceBetween: 30,
                                     centeredSlides: true,
                                 },
                                 1280: {
-                                    slidesPerView: 2.2,
-                                    spaceBetween: 40,
+                                    slidesPerView: 1,
+                                    spaceBetween: 30,
                                     centeredSlides: true,
                                 }
                             }}
@@ -363,7 +363,7 @@ export default function RegistrationForm() {
                                 dynamicBullets: true,
                                 el: '.dept-pagination'
                             }}
-                            modules={[Controller]}
+                            modules={[Navigation, Pagination]}
                             className="department-carousel w-full !pb-12"
                         >
                         {Departements.map((department, index) => (
@@ -410,11 +410,15 @@ export default function RegistrationForm() {
                             </SwiperSlide>
                         ))}
                         {/* Navigation Arrows */}
-                        <div className="dept-swiper-button-prev absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gradient-to-r from-[#00F186] to-[#00B1E5] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg">
-                            <img src={"/previous.svg"} alt="Previous" className="w-5 h-5 filter brightness-0 invert" />
+                        <div className="dept-swiper-button-prev absolute left-8 lg:left-12 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gradient-to-r from-[#00F186] to-[#00B1E5] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg">
+                            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                            </svg>
                         </div>
-                        <div className="dept-swiper-button-next absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gradient-to-r from-[#00F186] to-[#00B1E5] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg">
-                            <img src={"/next.svg"} alt="Next" className="w-5 h-5 filter brightness-0 invert" />
+                        <div className="dept-swiper-button-next absolute right-8 lg:right-12 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gradient-to-r from-[#00F186] to-[#00B1E5] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg">
+                            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                            </svg>
                         </div>
                         
                         {/* Custom Pagination */}
