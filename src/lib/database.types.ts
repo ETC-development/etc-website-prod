@@ -249,11 +249,14 @@ export interface Database {
     }
     Enums: {
       departments:
-        | "development"
-        | "design"
-        | "events"
-        | "marketing"
-        | "multimedia"
+        | "production_multimedia"
+        | "finance"
+        | "relex"
+        | "dev"
+        | "ai"
+        | "ui_ux"
+        | "graphic"
+        | "planning_logistics"
       level: "1CP / 1L" | "2CP / 2L" | "1CS / 3L" | "2CS / 1M" | "3CS / 2M"
       status: "accepted" | "pending" | "rejected"
     }

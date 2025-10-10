@@ -52,7 +52,19 @@ export default function RegistrationForm() {
 
     const supabase = createClientSupabaseClient();
 
-    const departments = ["design", "development", "events", "marketing", "multimedia"];
+    // Department mapping: database value -> display name
+    const departmentMapping = {
+        "production_multimedia": "Production & multimedia",
+        "finance": "Finance",
+        "relex": "Relex",
+        "dev": "Dev",
+        "ai": "AI",
+        "ui_ux": "UI/UX",
+        "graphic": "Graphic",
+        "planning_logistics": "Planning & Logistics"
+    };
+
+    const departments = ["production_multimedia", "finance", "relex", "dev", "ai", "ui_ux", "graphic", "planning_logistics"];
     const levels = ["1CP / 1L", "2CP / 2L", "1CS / 3L", "2CS / 1M", "3CS / 2M"];
 
     const paragraphs = ["self_description", "selection_justification", "first_choice_motivation", "second_choice_motivation", "third_choice_motivation"];
@@ -310,43 +322,105 @@ export default function RegistrationForm() {
                     2 <div className=" w-5 h-5 bg-white text-white rounded-full"></div> <span
                     className=" ml-1 font-bold">  Department Orientation</span>
                 </div>
-                <div>
-                    <Swiper
-                        onSwiper={setFirstSwiper}
-                        controller={{ control: firstSwiper }}
-                        slidesPerView={1}
-                        centeredSlides={true}
-                        navigation={{
-                            nextEl: ".swiper-button-next",
-                            prevEl: ".swiper-button-prev"
-                        }}
-                        pagination={{ clickable: true }}
-                        modules={[Controller]}
-                        className="my-custom-swiper lg:!w-[45%]"
-
-                    >
+                <div className="w-full px-4 lg:px-16 py-8">
+                    <div className="relative max-w-6xl mx-auto">
+                        <Swiper
+                            onSwiper={setFirstSwiper}
+                            controller={{ control: firstSwiper }}
+                            slidesPerView={1}
+                            spaceBetween={20}
+                            centeredSlides={true}
+                            loop={true}
+                            speed={800}
+                            breakpoints={{
+                                640: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 20,
+                                    centeredSlides: true,
+                                },
+                                768: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 30,
+                                    centeredSlides: true,
+                                },
+                                1024: {
+                                    slidesPerView: 1.8,
+                                    spaceBetween: 40,
+                                    centeredSlides: true,
+                                },
+                                1280: {
+                                    slidesPerView: 2.2,
+                                    spaceBetween: 40,
+                                    centeredSlides: true,
+                                }
+                            }}
+                            navigation={{
+                                nextEl: ".dept-swiper-button-next",
+                                prevEl: ".dept-swiper-button-prev"
+                            }}
+                            pagination={{ 
+                                clickable: true,
+                                dynamicBullets: true,
+                                el: '.dept-pagination'
+                            }}
+                            modules={[Controller]}
+                            className="department-carousel w-full !pb-12"
+                        >
                         {Departements.map((department, index) => (
-                            <SwiperSlide key={index} className="!flex !items-center !justify-center swiper-slide-team ">
-                                <div
-                                    className="flex items-center flex-col gap-5 bg-[#093441] rounded-[30px] p-5 w-[260px] lg:w-[320px] my-10">
-                                    <p className=" w-32 font-montserrat text-center text-white text-[16px] font-bold">
+                            <SwiperSlide key={index} className="!flex !items-stretch !justify-center">
+                                <div className="flex flex-col gap-4 bg-gradient-to-b from-[#0A3B42] to-[#093441] rounded-[20px] p-6 w-full max-w-[320px] h-full shadow-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+                                    {/* Department Icon */}
+                                    <div className="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-[#00F186] to-[#00B1E5] rounded-full mb-2 mx-auto">
+                                        <span className="text-white font-bold text-lg">
+                                            {department.DepartementName.split(' ')[0][0]}{department.DepartementName.split(' ').slice(-1)[0][0]}
+                                        </span>
+                                    </div>
+                                    
+                                    {/* Department Name */}
+                                    <h3 className="font-montserrat text-center text-white text-[19px] font-bold mb-2">
                                         {department.DepartementName}
-                                    </p>
-                                    <p className="font-montserrat text-center text-white/70 text-[14px] ">
-                                        {department.desc}
-                                    </p>
+                                    </h3>
+                                    
+                                    {/* Managers Section */}
+                                    <div className="bg-white/5 rounded-xl p-4 mb-2">
+                                        <p className="font-montserrat text-center text-white/60 text-[11px] uppercase tracking-widest mb-2">
+                                            MANAGERS
+                                        </p>
+                                        <p className="font-montserrat text-center text-white text-[14px] font-medium">
+                                            {department.managers}
+                                        </p>
+                                    </div>
+                                    
+                                    {/* Limit Badge */}
+                                    {department.limit && (
+                                        <div className="bg-gradient-to-r from-[#00F186]/15 to-[#00B1E5]/15 rounded-xl p-3 border border-[#00F186]/30 mb-2">
+                                            <p className="font-montserrat text-center text-[#00F186] text-[13px] font-medium">
+                                                ⚡ Limited to {department.limit} members
+                                            </p>
+                                        </div>
+                                    )}
+                                    
+                                    {/* Description */}
+                                    <div className="flex-1 flex items-center">
+                                        <p className="font-montserrat text-center text-white/75 text-[14px] leading-relaxed">
+                                            {department.desc}
+                                        </p>
+                                    </div>
                                 </div>
                             </SwiperSlide>
                         ))}
-                        <div className="slider-controler ">
-                            <div className="swiper-button-prev slider-arrow after:hidden ">
-                                <img src={"/previous.svg"} alt="" className="" />
-                            </div>
-                            <div className="swiper-button-next slider-arrow after:hidden">
-                                <img src={"/next.svg"} alt="" className="" />
-                            </div>
+                        {/* Navigation Arrows */}
+                        <div className="dept-swiper-button-prev absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gradient-to-r from-[#00F186] to-[#00B1E5] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg">
+                            <img src={"/previous.svg"} alt="Previous" className="w-5 h-5 filter brightness-0 invert" />
                         </div>
-                    </Swiper>
+                        <div className="dept-swiper-button-next absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gradient-to-r from-[#00F186] to-[#00B1E5] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg">
+                            <img src={"/next.svg"} alt="Next" className="w-5 h-5 filter brightness-0 invert" />
+                        </div>
+                        
+                        {/* Custom Pagination */}
+                        <div className="dept-pagination flex justify-center mt-8"></div>
+                        </Swiper>
+                    </div>
                 </div>
                 <div className="flex flex-col gap-4 lg:pr-20 lg:pl-32 ">
                     <p className=" font-montserrat text-white text-[18px] lg:text-[20px] font-medium text-left">
@@ -358,7 +432,8 @@ export default function RegistrationForm() {
                     <Option id="dep_first_choice" placeholder="First Choice * " name="dep_first_choice"
                             applicant={applicantInfo} value={applicantInfo?.dep_first_choice}
                             setInputValue={setApplicantInfo}
-                            options={departments.filter(dep => !([applicantInfo.dep_second_choice, applicantInfo.dep_third_choice] as string[]).includes(dep))} />
+                            options={departments.filter(dep => !([applicantInfo.dep_second_choice, applicantInfo.dep_third_choice] as string[]).includes(dep))}
+                            optionMapping={departmentMapping} />
                     {errors.dep_first_choice && <div className="text-sm text-red-600">{errors.dep_first_choice}</div>}
                     <p className=" font-montserrat text-white text-[14px] lg:text-[16px] font-medium text-left">
                         . What are the reasons behind your first choice ? *
@@ -376,7 +451,8 @@ export default function RegistrationForm() {
                     <Option id="dep_second_choice" placeholder="Second Choice * " name="dep_second_choice"
                             applicant={applicantInfo} value={applicantInfo?.dep_second_choice}
                             setInputValue={setApplicantInfo}
-                            options={departments.filter(dep => !([applicantInfo.dep_first_choice, applicantInfo.dep_third_choice] as string[]).includes(dep))} />
+                            options={departments.filter(dep => !([applicantInfo.dep_first_choice, applicantInfo.dep_third_choice] as string[]).includes(dep))}
+                            optionMapping={departmentMapping} />
                     {errors.dep_second_choice && <div className="text-sm text-red-600">{errors.dep_second_choice}</div>}
                     <p className=" font-montserrat text-white text-[14px] lg:text-[16px] font-medium text-left">
                         . What are the reasons behind your second choice ? *
@@ -394,7 +470,8 @@ export default function RegistrationForm() {
                     <Option id="dep_third_choice" placeholder="Third Choice * " name="dep_third_choice"
                             applicant={applicantInfo} value={applicantInfo?.dep_third_choice}
                             setInputValue={setApplicantInfo}
-                            options={departments.filter(dep => !([applicantInfo.dep_first_choice, applicantInfo.dep_second_choice] as string[]).includes(dep))} />
+                            options={departments.filter(dep => !([applicantInfo.dep_first_choice, applicantInfo.dep_second_choice] as string[]).includes(dep))}
+                            optionMapping={departmentMapping} />
                     {errors.dep_third_choice && <div className="text-sm text-red-600">{errors.dep_third_choice}</div>}
                     <p className=" font-montserrat text-white text-[14px] lg:text-[16px] font-medium text-left">
                         . What are the reasons behind your third choice ? *

@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClientRW } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     const origin = requestUrl.origin;
 
     if (code) {
-        const supabase = await createServerSupabaseClient();
+        const supabase = await createServerSupabaseClientRW();
         await supabase.auth.exchangeCodeForSession(code);
     }
 

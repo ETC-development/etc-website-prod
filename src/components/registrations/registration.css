@@ -46,7 +46,125 @@ select {
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
-    background-color: #fff;
+    background-color: #00F186;
     width: 14px;
     height: 14px;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet {
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 10px;
+    height: 10px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.department-carousel {
+    overflow: visible !important;
+    padding: 40px 0;
+}
+
+.department-carousel .swiper-wrapper {
+    align-items: stretch;
+    padding: 0 20px;
+}
+
+.department-carousel .swiper-slide {
+    height: auto !important;
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Smooth slide transitions */
+.department-carousel .swiper-slide-active {
+    transform: scale(1.02);
+}
+
+.department-carousel .swiper-slide:not(.swiper-slide-active) {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+/* Custom pagination styles */
+.dept-pagination .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 6px;
+    transition: all 0.3s ease;
+}
+
+.dept-pagination .swiper-pagination-bullet-active {
+    background: linear-gradient(45deg, #00F186, #00B1E5);
+    width: 16px;
+    height: 16px;
+    transform: scale(1.2);
+}
+
+/* Navigation button states */
+.dept-swiper-button-prev:hover,
+.dept-swiper-button-next:hover {
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 8px 25px rgba(0, 241, 134, 0.4);
+}
+
+.dept-swiper-button-prev:active,
+.dept-swiper-button-next:active {
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .department-carousel .swiper-slide:not(.swiper-slide-active) {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+}
+
+@media (max-width: 768px) {
+    .department-carousel {
+        padding: 20px 0;
+    }
+    
+    .department-carousel .swiper-wrapper {
+        padding: 0 10px;
+    }
+    
+    .dept-swiper-button-prev {
+        left: 10px !important;
+        width: 44px !important;
+        height: 44px !important;
+    }
+    
+    .dept-swiper-button-next {
+        right: 10px !important;
+        width: 44px !important;
+        height: 44px !important;
+    }
+    
+    .department-carousel .swiper-slide-active {
+        transform: scale(1.01);
+    }
+    
+    .department-carousel .swiper-slide:not(.swiper-slide-active) {
+        transform: scale(0.96);
+        opacity: 0.85;
+    }
+}
+
+@media (max-width: 640px) {
+    .dept-swiper-button-prev {
+        left: 5px !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .dept-swiper-button-next {
+        right: 5px !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
 }

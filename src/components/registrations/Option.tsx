@@ -8,7 +8,8 @@ interface CardProps {
   value: string,
   applicant: Applicant,
   setInputValue: (updateAppicant: Applicant) => void,
-  id: string
+  id: string,
+  optionMapping?: Record<string, string> // Optional mapping for display names
 }
 
 export default function Option({
@@ -18,7 +19,8 @@ export default function Option({
   value,
   setInputValue,
   applicant,
-  id
+  id,
+  optionMapping
 }: CardProps) {
 
   return (
@@ -39,7 +41,7 @@ export default function Option({
 
       {options.map((option) => (
         <option key={option} value={option}>
-          {option}
+          {optionMapping ? optionMapping[option] || option : option}
         </option>
       ))}
     </select>
