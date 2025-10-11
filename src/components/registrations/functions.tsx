@@ -1,5 +1,6 @@
 import { createClientSupabaseClient } from "@/lib/supabase/client";
 import { Applicant } from "./Applicant";
+import { Database } from "@/lib/database.types";
 
 interface IAddApplicant {
     applicant: Applicant,
@@ -47,20 +48,19 @@ export async function addNewApplicant({
     
     // Transform data to match database schema
     const registrationData = {
-        fullname: applicant.fullname,
-        email: applicant.email,
-        level: applicant.level as any, // Cast to satisfy enum type
-        discord: applicant.discord,
-        discord_id: applicant.discord_id ? parseInt(applicant.discord_id, 10) : null,
-        self_description: applicant.self_description,
+        fullname: applicant.fullname.trim(),
+        email: applicant.email.trim().toLowerCase(),
+        level: applicant.level as any,
+        discord: applicant.discord.trim(),
+        clubs_experience: applicant.self_description.trim(),
         dep_first_choice: applicant.dep_first_choice as any,
         dep_second_choice: applicant.dep_second_choice as any,
         dep_third_choice: applicant.dep_third_choice as any,
-        first_choice_motivation: applicant.first_choice_motivation,
-        second_choice_motivation: applicant.second_choice_motivation,
-        third_choice_motivation: applicant.third_choice_motivation,
-        selection_justification: applicant.selection_justification,
-        github_portfolio: applicant.github_portfolio || null
+        first_choice_experience: applicant.first_choice_motivation.trim(),
+        second_choice_experience: applicant.second_choice_motivation.trim(),
+        third_choice_experience: applicant.third_choice_motivation.trim(),
+        staying_motivated: applicant.selection_justification.trim(),
+        github_portfolio: applicant.github_portfolio?.trim() || null
     };
 
     console.log("Submitting applicant:", registrationData);
@@ -72,16 +72,22 @@ export async function addNewApplicant({
     
     if (error) {
         console.error("Registration error:", error);
-        let errorMsg = "There was an error while submitting your request, please try again"
+        let errorMsg = "There was an error while submitting your request, please try again";
 
-        // code 23505 is for duplicate key in postgresql
-        if(error.code === "23505") {
-            errorMsg = "You have registered already!"
-            setApplicantInfo(applicantInfoEmpty)
+        // Handle specific error codes
+        if (error.code === "23505") {
+            errorMsg = "You have registered already!";
+            setApplicantInfo(applicantInfoEmpty);
+        } else if (error.code === "42P01") {
+            errorMsg = "Database configuration error. Please contact support.";
+        } else if (error.message) {
+            // Include the actual error message for debugging
+            console.error("Detailed error:", error.message);
+            errorMsg = "Registration failed. Please check your information and try again.";
         }
 
         setInsertionError(errorMsg);
-        scrollToTop()
+        scrollToTop();
     }
     if (data) {
         setInsertionMessage("You have registered successfully!!");
