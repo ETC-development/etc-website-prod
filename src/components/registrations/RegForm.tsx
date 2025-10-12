@@ -183,7 +183,7 @@ export default function RegistrationForm() {
             updatedErrors.level = "Please choose your level.";
         }
         if (!validEmail(applicantInfo.email)) {
-            updatedErrors.email = "Please provide a valid @ensia.edu.dz email.";
+            updatedErrors.email = "Please provide a valid email address.";
         }
 
         if (!user) {
@@ -275,7 +275,7 @@ export default function RegistrationForm() {
                                applicant={applicantInfo}
                                value={applicantInfo?.fullname} setInputValue={setApplicantInfo} height="h-auto" />
                         {errors.fullname && <div className="text-sm text-red-600">{errors.fullname}</div>}
-                        <Input id="email" placeholder="School’s email *" type="email" name="email"
+                        <Input id="email" placeholder="Email address *" type="email" name="email"
                                applicant={applicantInfo}
                                value={applicantInfo?.email} setInputValue={setApplicantInfo} height="h-auto" />
                         {errors.email && <div className="text-sm text-red-600">{errors.email}</div>}
