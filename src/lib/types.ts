@@ -50,7 +50,6 @@ export interface RegistrationFormData {
     email: string;
     level: Level | "";
     discord: string;
-    discord_id: string;
     self_description: string;
     dep_first_choice: Department | "";
     dep_second_choice: Department | "";

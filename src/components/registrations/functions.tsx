@@ -24,8 +24,7 @@ export const applicantInfoEmpty: Applicant = {
     second_choice_motivation: "",
     third_choice_motivation: "",
     selection_justification: "",
-    github_portfolio: "",
-    discord_id: ""
+    github_portfolio: ""
 };
 
 function scrollToTop() {

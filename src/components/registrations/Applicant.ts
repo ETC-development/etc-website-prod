@@ -14,6 +14,5 @@ export interface Applicant {
         third_choice_motivation: string;
         selection_justification: string;
         github_portfolio: string;
-        discord_id: string;
         [key: string]: string; 
 }

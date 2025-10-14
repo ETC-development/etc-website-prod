@@ -5,7 +5,6 @@ import bot1P from "../../../public/assets/registration/Bot1P.svg";
 import bot2 from "../../../public/assets/registration/Bot2.svg";
 import Input from "@/components/registrations/Input";
 import Option from "@/components/registrations/Option";
-import discord from "../../../public/assets/registration/discord.svg";
 import bot2P from "../../../public/assets/registration/Bot2P.svg";
 import bot3P from "../../../public/assets/registration/Bot3P.svg";
 import bot3 from "../../../public/assets/registration/Bot3.svg";
@@ -21,15 +20,9 @@ import SwiperCore from "swiper";
 import RegistrationTitle from "@/components/registrations/RegistrationTitle";
 import { useEffect, useState } from "react";
 import { Applicant } from "./Applicant";
-import { checkDepartments, checkParagraphs, validEmail, validName, validOption } from "./validation.fun";
+import { checkDepartments, checkParagraphs, validDiscord, validEmail, validName, validOption } from "./validation.fun";
 import { addNewApplicant, applicantInfoEmpty } from "./functions";
-import { signInWithDiscord, signOutFromDiscord } from "./discord";
-import { usePathname, useRouter } from "next/navigation";
-import { createClientSupabaseClient } from "@/lib/supabase/client";
-import { Database } from "@/lib/database.types";
-import { User } from "@supabase/supabase-js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 import Button1 from "../utils/Button1";
 
 
@@ -49,8 +42,6 @@ const getApplicantData = () => {
 
 
 export default function RegistrationForm() {
-
-    const supabase = createClientSupabaseClient();
 
     // Department mapping: database value -> display name
     const departmentMapping = {
@@ -79,14 +70,7 @@ export default function RegistrationForm() {
     const [firstSwiper, setFirstSwiper] = useState<SwiperCore>();
 
 
-    const [user, setUser] = useState<User | null>();
-
-
-    // const user = useUser()
-
     const router = useRouter();
-
-    const pathname = usePathname();
 
     async function validateAndSubmit(updatedErrors: Applicant) {
         setInsertionError("");
@@ -125,30 +109,7 @@ export default function RegistrationForm() {
         }
     }
 
-    useEffect(() => {
 
-        async function getUser() {
-            const userData = await supabase.auth.getUser();
-            return userData.data.user;
-        }
-
-        getUser().then(user => {
-
-            if (!user) {
-                setUser(null);
-                return;
-            }
-
-            setApplicantInfo({
-                ...applicantInfo,
-                discord_id: user?.user_metadata.provider_id,
-                discord: user?.user_metadata.full_name || user?.user_metadata.name
-            });
-
-            setUser(user);
-        });
-
-    }, []);
 
 
     //
@@ -186,46 +147,14 @@ export default function RegistrationForm() {
             updatedErrors.email = "Please provide a valid email address.";
         }
 
-        if (!user) {
-            updatedErrors.discord = "Please connect your Discord account.";
+        if (!validDiscord(applicantInfo.discord)) {
+            updatedErrors.discord = "Please provide a valid Discord tag.";
         }
 
         await checkParagraphs(paragraphs, updatedErrors, applicantInfo);
         await checkDepartments(depart, updatedErrors, applicantInfo);
         setErrors(updatedErrors);
         await validateAndSubmit(updatedErrors);
-    }
-
-    function getDiscordLoginButton() {
-        return <button
-            onClick={() => signInWithDiscord(router)}
-            type={"button"}
-            className="flex items-center justify-center gap-4 focus:bg-[#074F57] bg-[#093441] z-20  self-stretch flex-1 rounded-xl  font-montserrat text-[#C7C7C7] pl-8 py-3 text-[12px]  lg:text-[16px] ">
-            <Image
-                src={discord}
-                alt=""
-                className=" w-9"
-            >
-            </Image>
-            Connect with your Discord Account
-        </button>;
-    }
-
-
-    function getDiscordLogoutButton() {
-        return <div
-            className={"flex items-center gap-3 justify-center focus:bg-[#074F57] bg-[#093441] z-20  self-stretch flex-1 rounded-xl  font-montserrat text-[#C7C7C7] py-3 text-md "}
-        >
-                <Image className={"rounded-full"} src={user?.user_metadata.avatar_url} alt={"profile picture"}
-                       width={30}
-                       height={30} />
-                <div className={""}>{user?.user_metadata.full_name || user?.user_metadata.name}</div>
-                <button
-                    onClick={() => signOutFromDiscord(router)}
-                >
-                    <FontAwesomeIcon icon={faSignOut} className="text-white" />
-                </button>
-        </div>;
     }
 
     return (
@@ -282,9 +211,9 @@ export default function RegistrationForm() {
                         <Option id="level" placeholder="Level * " name="level" applicant={applicantInfo}
                                 value={applicantInfo?.level} setInputValue={setApplicantInfo} options={levels} />
                         {errors.level && <div className="text-sm text-red-600">{errors.level}</div>}
-                        <div className="flex justify-center items-center p-1 bg-transparent borderGradient rounded-2xl">
-                            {user ? getDiscordLogoutButton() : getDiscordLoginButton()}
-                        </div>
+                        <Input id="discord" placeholder="Discord Tag (e.g., @username or username#1234) *" type="text" name="discord"
+                               applicant={applicantInfo}
+                               value={applicantInfo?.discord} setInputValue={setApplicantInfo} height="h-auto" />
                         {errors.discord && <div className="text-sm text-red-600">{errors.discord}</div>}
                         <Input isTextField={true} id="self_description" placeholder="Tell us more about yourself" type="text"
                                name="self_description" applicant={applicantInfo} value={applicantInfo?.self_description}
