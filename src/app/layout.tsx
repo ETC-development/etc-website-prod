@@ -67,7 +67,8 @@ export const viewport: Viewport = { themeColor: "#040D12", colorScheme: "dark" }
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={`${azonix.variable} ${archivo.variable} ${mono.variable}`}>
-            <body>
+            {/* Browser extensions (e.g. WOT) inject attributes on <body> before hydration. */}
+            <body suppressHydrationWarning>
                 <a className="skip" href="#main">
                     Skip to content
                 </a>

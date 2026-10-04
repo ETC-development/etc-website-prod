@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { DOME, DOME_BASE, GRID } from "@/components/mascot";
 import { Arrow, Icon, Lockup, Social } from "@/components/ui";
 import { CELLS } from "@/data/cells";
 import { NAV } from "@/data/club";
@@ -127,18 +128,22 @@ export function MobileMenu({
 
 /* -------------------------------------------------------------- universe */
 const RIM_Y = 252;
+/** Emblem dome scale; its stroke keeps the emblem's proportions (16 units ≈ 7.7px). */
+const DOME_SCALE = 0.48;
+/** Tentacle roots span the emblem's outer tentacles (x 378 and 822 in emblem units). */
+const ROOT_HALF = (DOME_BASE.x - 378) * DOME_SCALE;
 function layout(n: number) {
     return Array.from({ length: n }, (_, i) => {
         const t = n === 1 ? 0.5 : i / (n - 1);
         const x = 120 + t * 960;
         const u = (x - 600) / 480;
         const y = 420 + (1 - u * u) * 280;
-        const sx = 500 + t * 200;
+        const sx = Math.round(600 + (t - 0.5) * 2 * ROOT_HALF);
         const ey = y - 38;
         const d =
             Math.abs(x - sx) < 1
-                ? `M${sx} ${RIM_Y}V${ey}`
-                : `M${sx} ${RIM_Y}C${sx} ${RIM_Y + 0.45 * (ey - RIM_Y)} ${x} ${ey - 0.5 * (ey - RIM_Y)} ${x} ${ey}`;
+                ? `M${sx} ${RIM_Y - 12}V${ey}`
+                : `M${sx} ${RIM_Y - 12}C${sx} ${RIM_Y + 0.45 * (ey - RIM_Y)} ${x} ${ey - 0.5 * (ey - RIM_Y)} ${x} ${ey}`;
         return {
             left: `${(x / 1200) * 100}%`,
             top: `${(y / 800) * 100}%`,
@@ -185,19 +190,48 @@ export function Universe({ events, discord }: { events: UniverseEvent[]; discord
                             <stop offset="0" stopColor="#19F08B" />
                             <stop offset="1" stopColor="#12C2F0" />
                         </linearGradient>
+                        {/* emblem gradient, in emblem coordinates (used inside the scaled dome) */}
+                        <linearGradient
+                            id="ug-dome"
+                            x1="420"
+                            y1="190"
+                            x2="780"
+                            y2="900"
+                            gradientUnits="userSpaceOnUse"
+                        >
+                            <stop offset="0" stopColor="#05E6A2" />
+                            <stop offset="1" stopColor="#00B2E4" />
+                        </linearGradient>
+                        <radialGradient
+                            id="ug-halo"
+                            cx="600"
+                            cy="190"
+                            r="300"
+                            gradientUnits="userSpaceOnUse"
+                        >
+                            <stop offset="0" stopColor="#12C2F0" stopOpacity=".16" />
+                            <stop offset=".55" stopColor="#12C2F0" stopOpacity=".05" />
+                            <stop offset="1" stopColor="#12C2F0" stopOpacity="0" />
+                        </radialGradient>
+                        <filter id="ug-glow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="b" />
+                            <feColorMatrix
+                                in="b"
+                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 .55 0"
+                            />
+                            <feMerge>
+                                <feMergeNode />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
                     </defs>
-                    <ellipse cx="600" cy="170" rx="210" ry="160" fill="url(#ug)" opacity=".07" />
-                    <g fill="none" stroke="url(#ug)" strokeWidth="3" strokeLinecap="round">
-                        <path d="M470 250C470 140 535 70 600 70C665 70 730 140 730 250" />
-                        <path d="M455 254Q600 226 745 254" />
-                        <path d="M600 70V240M600 70C560 105 545 170 543 246M600 70C640 105 655 170 657 246M490 172Q600 150 710 172" />
-                    </g>
-                    <g fill="none" stroke="url(#ug)" strokeWidth="2.5" strokeLinecap="round">
+                    <circle cx="600" cy="190" r="300" fill="url(#ug-halo)" />
+                    <g fill="none" stroke="url(#ug)" strokeWidth="6" strokeLinecap="round">
                         {pos.map((p) => (
                             <path key={p.d} className="tdraw" pathLength={100} d={p.d} />
                         ))}
                     </g>
-                    <g fill="none" stroke="#E9F3F1" strokeWidth="2.5" strokeLinecap="round">
+                    <g fill="none" stroke="#E9F3F1" strokeWidth="6" strokeLinecap="round">
                         {pos.map((p) => (
                             <path
                                 key={p.d}
@@ -206,6 +240,20 @@ export function Universe({ events, discord }: { events: UniverseEvent[]; discord
                                 style={{ animationDelay: p.delay }}
                                 d={p.d}
                             />
+                        ))}
+                    </g>
+                    <g
+                        transform={`translate(600 ${RIM_Y}) scale(${DOME_SCALE}) translate(${-DOME_BASE.x} ${-DOME_BASE.y})`}
+                        fill="none"
+                        stroke="url(#ug-dome)"
+                        strokeWidth="16"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        filter="url(#ug-glow)"
+                    >
+                        <path d={DOME} fill="#06171c" />
+                        {GRID.map((d) => (
+                            <path key={d} d={d} />
                         ))}
                     </g>
                 </svg>
@@ -505,9 +553,7 @@ export function CrewSection({ crew }: { crew: Crew }) {
     const filters = [
         { key: "all", label: "All" },
         { key: "board", label: "Board" },
-        ...groups
-            .filter((g) => g.key !== "other")
-            .map((g) => ({ key: g.key, label: g.label })),
+        ...groups.filter((g) => g.key !== "other").map((g) => ({ key: g.key, label: g.label })),
     ];
     const showBoard = filter === "all" || filter === "board";
     const list =
@@ -518,6 +564,36 @@ export function CrewSection({ crew }: { crew: Crew }) {
     const pages = Math.max(1, Math.ceil(list.length / per));
     const p = Math.min(page, pages - 1);
     const pad = (n: number) => String(n).padStart(2, "0");
+
+    // Autoplay: advance a page (desktop) or a card (mobile scroll rail) every few seconds.
+    // Pauses while hovered, off screen, or for a while after the visitor touches it.
+    const railRef = useRef<HTMLDivElement>(null);
+    const hold = useRef({ hover: false, inView: false, until: 0 });
+    useEffect(() => {
+        const rail = railRef.current;
+        if (!rail || list.length <= 1) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const io = new IntersectionObserver(([e]) => (hold.current.inView = e.isIntersecting));
+        io.observe(rail);
+        const id = setInterval(() => {
+            const h = hold.current;
+            if (document.hidden || h.hover || !h.inView || Date.now() < h.until) return;
+            if (getComputedStyle(rail).overflowX === "auto") {
+                const card = rail.querySelector<HTMLElement>(".mcard");
+                const step = (card?.offsetWidth ?? rail.clientWidth) + 16;
+                const atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+                rail.scrollTo({ left: atEnd ? 0 : rail.scrollLeft + step, behavior: "smooth" });
+            } else {
+                setPage((x) => (Math.min(x, pages - 1) + 1) % pages);
+            }
+        }, 4000);
+        return () => {
+            clearInterval(id);
+            io.disconnect();
+        };
+    }, [list.length, pages]);
+    const interact = () => (hold.current.until = Date.now() + 8000);
+
     return (
         <>
             <div
@@ -585,7 +661,15 @@ export function CrewSection({ crew }: { crew: Crew }) {
                 </div>
             )}
             {list.length > 0 && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 16 }}>
+                <div
+                    style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 16 }}
+                    onPointerEnter={(e) => {
+                        if (e.pointerType === "mouse") hold.current.hover = true;
+                    }}
+                    onPointerLeave={() => (hold.current.hover = false)}
+                    onPointerDown={interact}
+                    onFocus={interact}
+                >
                     <div
                         style={{
                             display: "flex",
@@ -627,7 +711,13 @@ export function CrewSection({ crew }: { crew: Crew }) {
                             </button>
                         </div>
                     </div>
-                    <div className="mrail" role="region" aria-label="Managers">
+                    <div
+                        ref={railRef}
+                        className="mrail"
+                        role="region"
+                        aria-label="Managers"
+                        onTouchStart={interact}
+                    >
                         <div
                             className="mtrack"
                             style={{ transform: `translateX(calc(${-p} * (100% + 16px)))` }}

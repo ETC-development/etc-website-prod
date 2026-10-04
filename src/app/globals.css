@@ -212,7 +212,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .b-fest { grid-column: span 12; }
 .b-learn, .b-reach { grid-column: span 4; }
 .bento-sub { display: flex; flex-direction: column; gap: 12px; margin: clamp(72px, 9vw, 112px) 0 40px; }
-.b-quant { grid-column: span 7; }
+.b-quant { grid-column: span 7; flex-direction: row; align-items: center; }
+.b-quant > svg { max-width: 100%; height: auto; }
 .b-read { grid-column: span 7; }
 .b-any { grid-column: span 6; }
 .cell { position: relative; overflow: hidden; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; transition: transform 0.4s var(--ease-out); }
@@ -502,6 +503,16 @@ textarea.inp { min-height: 132px; padding: 14px 16px; resize: vertical; line-hei
     .trusted { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .tlogo:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); }
     .seat { flex-direction: column; align-items: flex-start; }
+    .b-quant { flex-direction: column; align-items: flex-start; }
+    .b-quant > svg { align-self: center; width: 180px; }
+    /* board: key members stacked as full cards, sized between the president and the managers,
+       each hung from the one above by a short connector */
+    .branch { display: none; }
+    .keys { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 0; }
+    .keys .mcard { width: min(300px, 80%); align-items: center; text-align: center; }
+    .keys .mcard::before { content: ""; width: 2px; height: 36px; background: var(--grad); }
+    .keys .mcard > div:last-child { align-items: center !important; padding-bottom: 8px; }
+    .keys .xp { font-size: 26px !important; }
     .header .lockup img + img { display: none; }
 }
 

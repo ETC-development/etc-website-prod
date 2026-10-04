@@ -1,16 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
-import {
-    Arrow,
-    Icon,
-    Jelly,
-    Lockup,
-    Social,
-    type IconName,
-    type SocialName,
-} from "@/components/ui";
+import { Arrow, Icon, Lockup, Social, type IconName, type SocialName } from "@/components/ui";
 import { Cells, CrewSection, MobileMenu, Universe } from "@/components/interactive";
+import { Mascot } from "@/components/mascot";
 import { CELLS } from "@/data/cells";
 import { CREDITS, NAV, SITE, type Club } from "@/data/club";
 import { CREW_SEASON } from "@/data/crew";
@@ -336,7 +329,7 @@ export function Hero({ club }: { club: Club }) {
                 </div>
                 <div className="hero-jelly" style={{ display: "flex", justifyContent: "center" }}>
                     <div className="bob" style={{ width: "min(560px, 100%)" }}>
-                        <Jelly />
+                        <Mascot />
                     </div>
                 </div>
             </div>
@@ -1203,11 +1196,7 @@ export function Shipped({ projects }: { projects: ProjectMeta[] }) {
                     {quant && (
                         <article
                             className="cell b-quant reveal"
-                            style={{
-                                background: "var(--deep)",
-                                flexDirection: "row",
-                                alignItems: "center",
-                            }}
+                            style={{ background: "var(--deep)" }}
                         >
                             <div
                                 style={{
