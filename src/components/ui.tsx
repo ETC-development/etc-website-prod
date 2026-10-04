@@ -170,9 +170,7 @@ const NODES: [number, number][] = [
     [430, 504],
     [505, 562],
 ];
-const DELAYS = [0, 0.9, 1.6, 0.4, 2.1, 1.2, 0.6];
-
-/** The Jelly: the ETC emblem as a living creature. Signals run down its seven tentacles. */
+/** The Jelly: the ETC emblem as a living creature. */
 export function Jelly({
     id = "jg",
     className = "jelly",
@@ -229,33 +227,9 @@ export function Jelly({
                     <path key={d} d={d} />
                 ))}
             </g>
-            <g
-                fill="none"
-                stroke="#E9F3F1"
-                strokeWidth={stroke}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            >
-                {TENTACLES.map((d, i) => (
-                    <path
-                        key={d}
-                        className="pulse"
-                        pathLength={100}
-                        style={{ animationDelay: `${DELAYS[i]}s` }}
-                        d={d}
-                    />
-                ))}
-            </g>
-            <g stroke={`url(#${id})`} strokeWidth={stroke}>
-                {NODES.map(([cx, cy], i) => (
-                    <circle
-                        key={cx + "-" + cy}
-                        className="nd"
-                        style={{ animationDelay: `${DELAYS[i]}s` }}
-                        cx={cx}
-                        cy={cy}
-                        r={13}
-                    />
+            <g fill="#040d12" stroke={`url(#${id})`} strokeWidth={stroke}>
+                {NODES.map(([cx, cy]) => (
+                    <circle key={cx + "-" + cy} cx={cx} cy={cy} r={13} />
                 ))}
             </g>
         </svg>

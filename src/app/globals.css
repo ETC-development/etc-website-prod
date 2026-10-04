@@ -148,8 +148,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .bob { animation: bob 6s ease-in-out infinite alternate; }
 @keyframes flow { from { stroke-dashoffset: 7; } to { stroke-dashoffset: -100; } }
 .pulse { stroke-dasharray: 7 100; stroke-dashoffset: 7; animation: flow 2.6s linear infinite; }
-@keyframes ping { 0%, 80% { fill: #040d12; } 88% { fill: #12c2f0; } 100% { fill: #040d12; } }
-.nd { animation: ping 2.6s linear infinite; }
 @keyframes breathe { from { transform: scale(1, 1); } to { transform: scale(1.02, 0.955); } }
 .dome { transform-box: fill-box; transform-origin: 50% 100%; animation: breathe 3.2s ease-in-out infinite alternate; }
 @keyframes drift { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 0.75; } 100% { transform: translateY(-260px); opacity: 0; } }
