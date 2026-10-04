@@ -107,6 +107,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .btn-ink { background: var(--ink); color: var(--foam); }
 .btn-discord { background: #5865f2; color: #fff; }
 .btn-discord:hover { box-shadow: 0 0 28px rgba(88, 101, 242, 0.5); }
+.btn-google { background: #fff; color: #1f1f1f; }
+.btn-google:hover { box-shadow: 0 0 28px rgba(255, 255, 255, 0.35); }
 .btn .arr { transition: transform 0.25s var(--ease-out); }
 .btn:hover .arr { transform: translateX(4px); }
 .sq { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: none; background: transparent; border: 0; color: var(--foam); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; transition: box-shadow 0.2s, opacity 0.2s; }

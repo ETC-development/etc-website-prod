@@ -27,6 +27,93 @@ export interface Database {
         }
         Relationships: []
       }
+      applications: {
+        Row: {
+          about: string
+          assigned_cell: Database["public"]["Enums"]["cell"] | null
+          choice_1: Database["public"]["Enums"]["cell"]
+          choice_2: Database["public"]["Enums"]["cell"] | null
+          choice_3: Database["public"]["Enums"]["cell"] | null
+          created_at: string
+          discord: string | null
+          email: string
+          first_name: string
+          id: number
+          last_name: string
+          level: Database["public"]["Enums"]["study_year"]
+          link_1: string | null
+          link_2: string | null
+          made: string
+          motivation_1: string
+          motivation_2: string | null
+          motivation_3: string | null
+          phone: string
+          reviewer_notes: string | null
+          school: Database["public"]["Enums"]["school"]
+          school_other: string | null
+          season: string
+          status: Database["public"]["Enums"]["application_status"]
+          user_id: string
+          why: string
+        }
+        Insert: {
+          about: string
+          assigned_cell?: Database["public"]["Enums"]["cell"] | null
+          choice_1: Database["public"]["Enums"]["cell"]
+          choice_2?: Database["public"]["Enums"]["cell"] | null
+          choice_3?: Database["public"]["Enums"]["cell"] | null
+          created_at?: string
+          discord?: string | null
+          email?: string
+          first_name: string
+          id?: number
+          last_name: string
+          level: Database["public"]["Enums"]["study_year"]
+          link_1?: string | null
+          link_2?: string | null
+          made: string
+          motivation_1: string
+          motivation_2?: string | null
+          motivation_3?: string | null
+          phone: string
+          reviewer_notes?: string | null
+          school: Database["public"]["Enums"]["school"]
+          school_other?: string | null
+          season?: string
+          status?: Database["public"]["Enums"]["application_status"]
+          user_id?: string
+          why: string
+        }
+        Update: {
+          about?: string
+          assigned_cell?: Database["public"]["Enums"]["cell"] | null
+          choice_1?: Database["public"]["Enums"]["cell"]
+          choice_2?: Database["public"]["Enums"]["cell"] | null
+          choice_3?: Database["public"]["Enums"]["cell"] | null
+          created_at?: string
+          discord?: string | null
+          email?: string
+          first_name?: string
+          id?: number
+          last_name?: string
+          level?: Database["public"]["Enums"]["study_year"]
+          link_1?: string | null
+          link_2?: string | null
+          made?: string
+          motivation_1?: string
+          motivation_2?: string | null
+          motivation_3?: string | null
+          phone?: string
+          reviewer_notes?: string | null
+          school?: Database["public"]["Enums"]["school"]
+          school_other?: string | null
+          season?: string
+          status?: Database["public"]["Enums"]["application_status"]
+          user_id?: string
+          why?: string
+        }
+        Relationships: []
+      }
       club_info: {
         Row: {
           address_link: string
@@ -180,6 +267,24 @@ export interface Database {
         }
         Relationships: []
       }
+      registration_settings: {
+        Row: {
+          id: boolean
+          is_open: boolean
+          season: string
+        }
+        Insert: {
+          id?: boolean
+          is_open?: boolean
+          season: string
+        }
+        Update: {
+          id?: boolean
+          is_open?: boolean
+          season?: string
+        }
+        Relationships: []
+      }
       registration: {
         Row: {
           assigned_dep: Database["public"]["Enums"]["departments"] | null
@@ -245,9 +350,21 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_season: { Args: never; Returns: string }
+      word_count: { Args: { t: string }; Returns: number }
     }
     Enums: {
+      application_status: "pending" | "accepted" | "rejected"
+      cell:
+        | "development"
+        | "ai"
+        | "design"
+        | "multimedia"
+        | "events"
+        | "marketing"
+        | "relex"
+      school: "ENSIA" | "ESI" | "NHSM" | "ENCS" | "NHSAST" | "ESNN" | "ESTA" | "Other"
+      study_year: "1Y" | "2Y" | "3Y" | "4Y" | "5Y" | "Other"
       departments:
         | "production_multimedia"
         | "finance"

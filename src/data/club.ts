@@ -22,7 +22,7 @@ export const CLUB = {
     address_link: "https://maps.google.com/?q=ENSIA+Sidi+Abdellah",
     insta_link: "https://www.instagram.com/etc_.club/",
     github_link: "https://github.com/ETC-development",
-    discord_link: "https://discord.gg/tFU3svvnVv",
+    discord_link: "https://discord.gg/Wb3py4yHh",
     linkedin_link: "https://www.linkedin.com/company/ensia-tech-community/",
     twitter_link: "https://x.com/ETC_ensia_club",
     facebook_link: "https://www.facebook.com/ensia.tech.community",
@@ -50,13 +50,16 @@ export const NAV = [
     { href: "/#feed", label: "Community" },
 ];
 
-/** Registration window. Flip `open` (or set `opensAt`) each recruitment season. */
+/**
+ * Registration window. `open` only picks which screen /registrations shows; the database switch
+ * (`registration_settings.is_open`, see supabase/applications.sql) is what accepts or refuses
+ * submissions..
+ */
 export const REGISTRATION = {
     open: false,
     /** ISO date shown on the closed screen, or null while undecided. */
     opensAt: null as string | null,
-    /** Supabase table the applications are written to. */
-    table: "registerations-2k25-2k26",
-    interviewWindow: "[DATE RANGE]",
+    /** Shown on the "application received" screen. */
+    reviewWindow: "[DATE RANGE]",
     resultsDate: "[DATE]",
 };

@@ -59,6 +59,7 @@ export function Icon({
 export type SocialName =
     | "instagram"
     | "discord"
+    | "google"
     | "github"
     | "linkedin"
     | "x"

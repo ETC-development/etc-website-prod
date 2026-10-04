@@ -1,7 +1,7 @@
 /**
  * Cells: the teams every member belongs to. Shown on the home page and in the registration form.
- * `apply: true` cells can be ranked by applicants; the key must exist in the `departments`
- * enum of the registration table in Supabase.
+ * `apply: true` cells can be ranked by applicants; the key must exist in the `cell` enum in
+ * Supabase (supabase/applications.sql).
  */
 import type { IconName } from "@/components/ui";
 
@@ -15,7 +15,7 @@ export const CELLS: {
     photo: string;
     desc: string;
     does: string[];
-    /** False while the registration table's `departments` enum has no value for this cell. */
+    /** Whether applicants can rank this cell this season. */
     apply: boolean;
 }[] = [
     {
@@ -93,5 +93,10 @@ export const CELLS: {
 /** Cells an applicant can rank today. */
 export const APPLY_CELLS = CELLS.filter((c) => c.apply);
 
-/** Study levels offered in the registration form (matches the `level` enum in Supabase). */
-export const LEVELS = ["1CP / 1L", "2CP / 2L", "1CS / 3L", "2CS / 1M", "3CS / 2M"] as const;
+/** Schools offered in the registration form (matches the `school` enum in Supabase). */
+export const SCHOOLS = ["ENSIA", "ESI", "NHSM", "ENCS", "NHSAST", "ESNN", "ESTA", "Other"] as const;
+export type School = (typeof SCHOOLS)[number];
+
+/** Years of study offered in the registration form (matches the `study_year` enum in Supabase). */
+export const LEVELS = ["1Y", "2Y", "3Y", "4Y", "5Y", "Other"] as const;
+export type Level = (typeof LEVELS)[number];
