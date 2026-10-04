@@ -10,13 +10,7 @@ import {
     type IconName,
     type SocialName,
 } from "@/components/ui";
-import {
-    Cells,
-    CrewSection,
-    MobileMenu,
-    NewsletterForm,
-    Universe,
-} from "@/components/interactive";
+import { Cells, CrewSection, MobileMenu, Universe } from "@/components/interactive";
 import { CELLS } from "@/data/cells";
 import { CREDITS, NAV, SITE, type Club } from "@/data/club";
 import { CREW_SEASON } from "@/data/crew";
@@ -156,8 +150,8 @@ export function Footer({ club }: { club: Club }) {
                         </div>
                         <p className="fog" style={{ margin: 0, fontSize: 15 }}>
                             The first scientific club of ENSIA, the National School of Artificial
-                            Intelligence, and its largest, since
-                            its creation on {SITE.founded}. Sidi Abdellah, Algiers.
+                            Intelligence, and its largest, since its creation on {SITE.founded}.
+                            Sidi Abdellah, Algiers.
                         </p>
                         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                             {SOCIALS.filter((s) => club[s.key]).map((s) => (
@@ -301,7 +295,9 @@ export function Hero({ club }: { club: Club }) {
                             style={{ height: 22, width: "auto" }}
                         />
                         <span style={{ width: 1, height: 22, background: "var(--line-2)" }} />
-                        <span className="mono fog">ENSIA&apos;s first scientific club · since 2022</span>
+                        <span className="mono fog">
+                            ENSIA&apos;s first scientific club · since 2022
+                        </span>
                     </div>
                     <h1
                         className="az"
@@ -324,8 +320,10 @@ export function Hero({ club }: { club: Club }) {
                             color: "var(--fog)",
                         }}
                     >
-                        ENSIA's central location for technology and computer science.
-                        Join us for projects, courses, and events geared toward tech enthusiasts of all skill levels. Together, let's unleash your potential and create a world driven by technology.
+                        ENSIA's central location for technology and computer science. Join us for
+                        projects, courses, and events geared toward tech enthusiasts of all skill
+                        levels. Together, let's unleash your potential and create a world driven by
+                        technology.
                     </p>
                     <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                         <Link className="btn btn-glow chamfer" href="/registrations">
@@ -409,8 +407,10 @@ export function Manifesto({ club }: { club: Club }) {
                         fontWeight: 500,
                     }}
                 >
-                    You learn by building, breaking things, trying again, and working with people who are just as curious as you are.
-                    Whether it&apos;s your first project or something you&apos;ve been working on for months, ETC gives you the space to turn what you know into something real.
+                    You learn by building, breaking things, trying again, and working with people
+                    who are just as curious as you are. Whether it&apos;s your first project or
+                    something you&apos;ve been working on for months, ETC gives you the space to
+                    turn what you know into something real.
                 </p>
             </div>
         </section>
@@ -443,9 +443,8 @@ export function UniverseSection({
                         The ETC <span className="gtext">universe</span>
                     </h2>
                     <p className="lead" style={{ margin: 0 }}>
-                        {events.length} events come back every season, and ETCode is the one we
-                        are known for. Each tentacle is one of them: pick it to see what happens
-                        there.
+                        {events.length} events come back every season, and ETCode is the one we are
+                        known for. Each tentacle is one of them: pick it to see what happens there.
                     </p>
                 </div>
                 <Universe events={events} discord={club.discord_link} />
@@ -603,6 +602,300 @@ function Bloch() {
     );
 }
 
+/* Festival: a row of exhibition stands under a string of flags, one per kind of project shown. */
+const FEST_FLAGS = Array.from({ length: 16 }, (_, i) => {
+    const x = 17.5 + i * 35;
+    const t = (x % 280) / 280;
+    return { x, y: 6 + 36 * t * (1 - t) };
+});
+const FEST_STANDS = ["Robots", "AI", "Apps", "Research", "Inventions"];
+
+function FestivalArt() {
+    const W = 100;
+    return (
+        <svg
+            className="fest-art"
+            viewBox="0 0 560 214"
+            width="100%"
+            aria-hidden="true"
+            style={{ overflow: "visible" }}
+        >
+            <defs>
+                <linearGradient id="fest-g" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0" stopColor="#19F08B" />
+                    <stop offset="1" stopColor="#12C2F0" />
+                </linearGradient>
+            </defs>
+            <path
+                d="M0 6Q140 42 280 6T560 6"
+                fill="none"
+                stroke="rgba(233,243,241,.22)"
+                strokeWidth="1.5"
+            />
+            {FEST_FLAGS.map((f, i) => (
+                <path
+                    key={f.x}
+                    d={`M${f.x - 7} ${f.y}h14l-7 12z`}
+                    fill={i % 2 ? "#12C2F0" : "#19F08B"}
+                    opacity={0.85}
+                />
+            ))}
+            {FEST_STANDS.map((label, i) => {
+                const x = 6 + i * (W + 12);
+                const cx = x + W / 2;
+                return (
+                    <g key={label}>
+                        <path d={`M${x + 8} 40h${W - 16}l8 18H${x}z`} fill="url(#fest-g)" />
+                        {[0, 1, 2, 3, 4].map((k) => (
+                            <path
+                                key={k}
+                                d={`M${x + k * 20} 58a10 10 0 0 0 20 0z`}
+                                fill="url(#fest-g)"
+                            />
+                        ))}
+                        <path
+                            d={`M${x + 6} 66V150M${x + W - 6} 66V150`}
+                            stroke="rgba(233,243,241,.22)"
+                            strokeWidth="2"
+                        />
+                        <rect x={x} y={150} width={W} height={26} fill="#10252e" />
+                        <path d={`M${x} 150h${W}`} stroke="#12C2F0" strokeWidth="2" />
+                        <g
+                            fill="none"
+                            stroke="#E9F3F1"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            {i === 0 && (
+                                <>
+                                    <rect x={cx - 17} y={96} width={34} height={26} rx={6} />
+                                    <path d={`M${cx} 96v-10M${cx - 22} 109h5M${cx + 17} 109h5`} />
+                                    <circle cx={cx} cy={84} r={3} fill="#19F08B" stroke="none" />
+                                    <circle
+                                        cx={cx - 7}
+                                        cy={108}
+                                        r={3}
+                                        fill="#12C2F0"
+                                        stroke="none"
+                                    />
+                                    <circle
+                                        cx={cx + 7}
+                                        cy={108}
+                                        r={3}
+                                        fill="#12C2F0"
+                                        stroke="none"
+                                    />
+                                    <path
+                                        d={`M${cx - 12} 122v6h24v-6M${cx - 8} 150v-22M${cx + 8} 150v-22`}
+                                    />
+                                </>
+                            )}
+                            {i === 1 && (
+                                <>
+                                    <path
+                                        d={`M${cx - 26} 100L${cx} 92L${cx + 26} 112M${cx - 26} 100L${cx} 112L${cx + 26} 112M${cx - 26} 124L${cx} 112M${cx - 26} 124L${cx} 132L${cx + 26} 112M${cx - 26} 100L${cx} 132M${cx - 26} 124L${cx} 92`}
+                                        strokeWidth="1.2"
+                                        opacity={0.55}
+                                    />
+                                    {[
+                                        [cx - 26, 100],
+                                        [cx - 26, 124],
+                                        [cx, 92],
+                                        [cx, 112],
+                                        [cx, 132],
+                                    ].map(([nx, ny]) => (
+                                        <circle
+                                            key={`${nx}-${ny}`}
+                                            cx={nx}
+                                            cy={ny}
+                                            r={4.5}
+                                            fill="#10252e"
+                                        />
+                                    ))}
+                                    <circle
+                                        cx={cx + 26}
+                                        cy={112}
+                                        r={6}
+                                        fill="#19F08B"
+                                        stroke="none"
+                                    />
+                                </>
+                            )}
+                            {i === 2 && (
+                                <>
+                                    <rect x={cx - 16} y={84} width={32} height={58} rx={6} />
+                                    <rect
+                                        x={cx - 10}
+                                        y={93}
+                                        width={20}
+                                        height={12}
+                                        fill="#12C2F0"
+                                        stroke="none"
+                                    />
+                                    <path
+                                        d={`M${cx - 10} 113h20M${cx - 10} 121h13M${cx - 4} 135h8`}
+                                    />
+                                </>
+                            )}
+                            {i === 3 && (
+                                <>
+                                    <rect x={cx - 24} y={78} width={48} height={64} />
+                                    <path d={`M${cx - 16} 88h32M${cx - 16} 96h22`} />
+                                    <path
+                                        d={`M${cx - 14} 132v-8M${cx - 4} 132v-16M${cx + 6} 132v-12M${cx + 16} 132v-22`}
+                                        stroke="#19F08B"
+                                        strokeWidth="4"
+                                        strokeLinecap="butt"
+                                    />
+                                </>
+                            )}
+                            {i === 4 && (
+                                <>
+                                    <path
+                                        d={`M${cx - 8} 132h16M${cx - 6} 139h12M${cx - 9} 126c0-8-9-10-9-22a18 18 0 0 1 36 0c0 12-9 14-9 22z`}
+                                    />
+                                    <path
+                                        className="fest-bulb"
+                                        d={`M${cx} 74v-8M${cx - 26} 104h-8M${cx + 26} 104h8M${cx - 19} 85l-6-6M${cx + 19} 85l6-6`}
+                                        stroke="#19F08B"
+                                    />
+                                </>
+                            )}
+                        </g>
+                        <text
+                            x={cx}
+                            y={204}
+                            textAnchor="middle"
+                            fill="#8fa3a6"
+                            fontSize="11"
+                            letterSpacing="0.06em"
+                            style={{
+                                fontFamily: "var(--font-mono), monospace",
+                                textTransform: "uppercase",
+                            }}
+                        >
+                            {label}
+                        </text>
+                    </g>
+                );
+            })}
+        </svg>
+    );
+}
+
+/* Learning Hub: a video lesson over a worksheet, next to the four playlists the channel is built around. */
+const LEARN_LISTS = ["Worksheets", "Modules", "Exams", "Concepts"];
+
+function LearnArt() {
+    return (
+        <svg viewBox="0 0 320 132" width="100%" aria-hidden="true">
+            <defs>
+                <linearGradient id="learn-g" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0" stopColor="#19F08B" />
+                    <stop offset="1" stopColor="#12C2F0" />
+                </linearGradient>
+            </defs>
+            <rect
+                x="0.75"
+                y="0.75"
+                width="198"
+                height="130"
+                fill="#040d12"
+                stroke="rgba(233,243,241,.22)"
+                strokeWidth="1.5"
+            />
+            <g fill="none" stroke="#8fa3a6" strokeWidth="1.5" strokeLinecap="round">
+                <path d="M16 18h44M16 28h70M16 38h56" />
+                <path d="M130 92V20M124 86h60" />
+                <path d="M132 84C148 82 156 32 182 26" stroke="#19F08B" strokeWidth="2" />
+            </g>
+            <text
+                x="16"
+                y="92"
+                fill="#E9F3F1"
+                fontSize="15"
+                fontStyle="italic"
+                style={{ fontFamily: "Georgia, serif" }}
+            >
+                ∫ f(x) dx
+            </text>
+            <circle cx="100" cy="58" r="18" fill="url(#learn-g)" />
+            <path d="M94 49v18l15-9z" fill="#04140D" />
+            <rect x="12" y="112" width="175" height="4" fill="#10252e" />
+            <rect x="12" y="112" width="104" height="4" fill="url(#learn-g)" />
+            <circle cx="116" cy="114" r="5" fill="#E9F3F1" />
+            {LEARN_LISTS.map((l, i) => {
+                const y = 4 + i * 32;
+                const on = i === 0;
+                return (
+                    <g key={l}>
+                        <rect
+                            x="212"
+                            y={y}
+                            width="34"
+                            height="22"
+                            fill={on ? "url(#learn-g)" : "#10252e"}
+                        />
+                        {on && <path d={`M225 ${y + 6}v10l9-5z`} fill="#04140D" />}
+                        <text
+                            x="254"
+                            y={y + 15}
+                            fill={on ? "#E9F3F1" : "#8fa3a6"}
+                            fontSize="10.5"
+                            style={{ fontFamily: "var(--font-mono), monospace" }}
+                        >
+                            {l}
+                        </text>
+                    </g>
+                );
+            })}
+        </svg>
+    );
+}
+
+/* Outreach: the route from the university to the schools we visit. */
+function OutreachArt() {
+    const label = (x: number, t: string, c = "#8fa3a6") => (
+        <text
+            x={x}
+            y={148}
+            textAnchor="middle"
+            fill={c}
+            fontSize="10.5"
+            style={{ fontFamily: "var(--font-mono), monospace" }}
+        >
+            {t}
+        </text>
+    );
+    return (
+        <svg viewBox="0 0 320 152" width="100%" aria-hidden="true" style={{ overflow: "visible" }}>
+            <path d="M0 124h320" stroke="rgba(233,243,241,.22)" strokeWidth="1.5" />
+            <path
+                className="ai-path"
+                d="M80 96C110 50 140 50 168 84M80 96C130 6 210 6 252 70"
+                fill="none"
+                stroke="#19F08B"
+                strokeWidth="2"
+                strokeDasharray="6 7"
+            />
+            <g fill="none" stroke="#E9F3F1" strokeWidth="2" strokeLinejoin="round">
+                <path d="M8 72L44 52L80 72z" fill="#10252e" />
+                <path d="M14 78v40M30 78v40M58 78v40M74 78v40M6 124h76M8 72h72v6H8z" />
+                <path d="M164 124V82h56v42M158 84l34-24 34 24" fill="#10252e" />
+                <path d="M186 124v-18h12v18M172 94h10M202 94h10" />
+                <path d="M248 124V72h66v52M242 74l39-26 39 26" fill="#10252e" />
+                <path d="M274 124v-18h14v18M258 84h10M294 84h10M258 98h10M294 98h10M281 48V26" />
+            </g>
+            <path d="M281 26h18l-5 5 5 5h-18z" fill="#12C2F0" />
+            <circle cx="80" cy="96" r="5" fill="#19F08B" />
+            {label(44, "ENSIA", "#E9F3F1")}
+            {label(192, "Middle school")}
+            {label(281, "High school")}
+        </svg>
+    );
+}
+
 function CellHead({
     kind,
     name,
@@ -637,6 +930,9 @@ function CellHead({
 export function Shipped({ projects }: { projects: ProjectMeta[] }) {
     const by = (k: string) => projects.find((p) => p.key === k);
     const hub = by("ensiahub"),
+        fest = by("festival"),
+        learn = by("learninghub"),
+        reach = by("outreach"),
         foss = by("fossflash"),
         cast = by("etcast"),
         train = by("trainingsessions"),
@@ -645,9 +941,10 @@ export function Shipped({ projects }: { projects: ProjectMeta[] }) {
         reels = by("techreels"),
         quant = by("quantumcorner"),
         read = by("readit");
-    const rest = projects.filter(
-        (p) => ![hub, foss, cast, train, ai, days, reels, quant, read].includes(p),
-    );
+    const custom = [hub, foss, cast, train, ai, days, reels, quant, read, fest, learn, reach];
+    const rest = projects.filter((p) => !custom.includes(p));
+    const restNow = rest.filter((p) => !p.upcoming),
+        restSoon = rest.filter((p) => p.upcoming);
     return (
         <section
             id="work"
@@ -677,49 +974,50 @@ export function Shipped({ projects }: { projects: ProjectMeta[] }) {
                             className="cell b-hub reveal"
                             style={{
                                 background:
-                                    "radial-gradient(70% 60% at 60% 40%, rgba(18,194,240,.16), transparent 70%), var(--deep)",
+                                    "radial-gradient(70% 90% at 85% 50%, rgba(18,194,240,.16), transparent 70%), var(--deep)",
                             }}
                         >
                             <div
                                 style={{
                                     display: "flex",
                                     justifyContent: "space-between",
+                                    flexWrap: "wrap",
                                     gap: 16,
                                 }}
                             >
                                 <span className="mono fog">{hub.kind}</span>
                                 <span className="mono fog">{hub.byline}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "center" }}>
+                            <div className="hub-row">
+                                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                                    <h3
+                                        className="xp"
+                                        style={{
+                                            margin: 0,
+                                            fontSize: "clamp(28px, 2.6vw, 40px)",
+                                            lineHeight: 1.05,
+                                        }}
+                                    >
+                                        {hub.name}
+                                    </h3>
+                                    <p className="fog" style={{ margin: 0, maxWidth: "40ch" }}>
+                                        {hub.desc}
+                                    </p>
+                                    {hub.href && (
+                                        <a
+                                            className="btn btn-line"
+                                            href={hub.href}
+                                            style={{ alignSelf: "flex-start", marginTop: 6 }}
+                                        >
+                                            Open {hub.name} <Icon name="arrow-ne" size={18} />
+                                        </a>
+                                    )}
+                                </div>
                                 <img
                                     className="hub-logo"
                                     src="/brand/ensia-hub.svg"
                                     alt="ENSIA Hub logo"
                                 />
-                            </div>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                                <h3
-                                    className="xp"
-                                    style={{
-                                        margin: 0,
-                                        fontSize: "clamp(28px, 2.6vw, 40px)",
-                                        lineHeight: 1.05,
-                                    }}
-                                >
-                                    {hub.name}
-                                </h3>
-                                <p className="fog" style={{ margin: 0, maxWidth: "44ch" }}>
-                                    {hub.desc}
-                                </p>
-                                {hub.href && (
-                                    <a
-                                        className="btn btn-line"
-                                        href={hub.href}
-                                        style={{ alignSelf: "flex-start", marginTop: 6 }}
-                                    >
-                                        Open {hub.name} <Icon name="arrow-ne" size={18} />
-                                    </a>
-                                )}
                             </div>
                         </article>
                     )}
@@ -750,7 +1048,67 @@ export function Shipped({ projects }: { projects: ProjectMeta[] }) {
                             <p style={{ margin: 0, maxWidth: "38ch", fontWeight: 500 }}>
                                 {foss.desc}
                             </p>
-                            <NewsletterForm />
+                        </article>
+                    )}
+                    {days && (
+                        <article
+                            className="cell b-days reveal"
+                            style={{ background: "var(--deep)" }}
+                        >
+                            <CellHead
+                                kind={days.kind}
+                                name={days.name}
+                                right={<Icon name="calendar" size={40} />}
+                            />
+                            <p className="fog" style={{ margin: 0, maxWidth: "52ch" }}>
+                                {days.desc}
+                            </p>
+                            <div className="tsteps" aria-hidden="true">
+                                <span>
+                                    <b className="az gtext">01</b> Presentations
+                                </span>
+                                <span className="tline" />
+                                <span>
+                                    <b className="az gtext">02</b> Workshops
+                                </span>
+                            </div>
+                            <div className="g-days">
+                                {TECH_DAYS.map((d) => (
+                                    <div key={d.name} className="day">
+                                        {d.by && (
+                                            <span className="mono" style={{ color: "var(--cyan)" }}>
+                                                {d.by}
+                                            </span>
+                                        )}
+                                        <span
+                                            className="xp"
+                                            style={{ fontSize: 22, lineHeight: 1.1 }}
+                                        >
+                                            {d.name}
+                                        </span>
+                                        {d.desc && (
+                                            <span className="fog" style={{ fontSize: 15 }}>
+                                                {d.desc}
+                                            </span>
+                                        )}
+                                        {d.figure && (
+                                            <span
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "baseline",
+                                                    gap: 10,
+                                                    marginTop: "auto",
+                                                }}
+                                            >
+                                                <span className="az gtext" style={{ fontSize: 30 }}>
+                                                    {d.figure[0]}
+                                                </span>
+                                                <span className="mono fog">{d.figure[1]}</span>
+                                            </span>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </article>
                     )}
                     {cast && (
@@ -842,178 +1200,6 @@ export function Shipped({ projects }: { projects: ProjectMeta[] }) {
                             </div>
                         </article>
                     )}
-                    {ai && (
-                        <article
-                            className="cell b-ai reveal"
-                            style={{ background: "var(--grad)", color: "var(--ink)" }}
-                        >
-                            <CellHead kind={ai.kind} name={ai.name} dark={false} />
-                            <svg
-                                viewBox="0 0 320 90"
-                                width="100%"
-                                height="90"
-                                aria-hidden="true"
-                                style={{ overflow: "visible" }}
-                            >
-                                <path
-                                    className="ai-path"
-                                    d="M8 70C60 70 70 20 120 20S180 70 230 70 290 20 312 20"
-                                    fill="none"
-                                    stroke="#04140D"
-                                    strokeWidth="2.5"
-                                    strokeDasharray="6 7"
-                                />
-                                {[
-                                    [8, 70],
-                                    [120, 20],
-                                    [230, 70],
-                                    [312, 20],
-                                ].map(([x, y], i) => (
-                                    <circle
-                                        key={x}
-                                        cx={x}
-                                        cy={y}
-                                        r={i === 3 ? 9 : 6}
-                                        fill={i === 3 ? "#04140D" : "#E9F3F1"}
-                                        stroke="#04140D"
-                                        strokeWidth="2.5"
-                                    />
-                                ))}
-                            </svg>
-                            <p style={{ margin: 0, maxWidth: "40ch", fontWeight: 500 }}>
-                                {ai.desc}
-                            </p>
-                        </article>
-                    )}
-                    {days && (
-                        <article
-                            className="cell b-days reveal"
-                            style={{ background: "var(--deep)" }}
-                        >
-                            <CellHead
-                                kind={days.kind}
-                                name={days.name}
-                                right={<Icon name="calendar" size={40} />}
-                            />
-                            <p className="fog" style={{ margin: 0, maxWidth: "52ch" }}>
-                                {days.desc}
-                            </p>
-                            <div className="tsteps" aria-hidden="true">
-                                <span>
-                                    <b className="az gtext">01</b> Presentations
-                                </span>
-                                <span className="tline" />
-                                <span>
-                                    <b className="az gtext">02</b> Workshops
-                                </span>
-                            </div>
-                            <div className="g-days">
-                                {TECH_DAYS.map((d) => (
-                                    <div key={d.name} className="day">
-                                        {d.by && (
-                                            <span className="mono" style={{ color: "var(--cyan)" }}>
-                                                {d.by}
-                                            </span>
-                                        )}
-                                        <span
-                                            className="xp"
-                                            style={{ fontSize: 22, lineHeight: 1.1 }}
-                                        >
-                                            {d.name}
-                                        </span>
-                                        {d.desc && (
-                                            <span className="fog" style={{ fontSize: 15 }}>
-                                                {d.desc}
-                                            </span>
-                                        )}
-                                        {d.figure && (
-                                            <span
-                                                style={{
-                                                    display: "flex",
-                                                    alignItems: "baseline",
-                                                    gap: 10,
-                                                    marginTop: "auto",
-                                                }}
-                                            >
-                                                <span className="az gtext" style={{ fontSize: 30 }}>
-                                                    {d.figure[0]}
-                                                </span>
-                                                <span className="mono fog">{d.figure[1]}</span>
-                                            </span>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </article>
-                    )}
-                    {reels && (
-                        <article
-                            className="cell b-reels reveal"
-                            style={{ background: "var(--trench)" }}
-                        >
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "flex-start",
-                                    gap: 16,
-                                }}
-                            >
-                                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                                    <span className="mono fog">{reels.kind}</span>
-                                    <h3
-                                        className="az"
-                                        style={{ margin: 0, fontSize: "clamp(26px, 2.4vw, 36px)" }}
-                                    >
-                                        {reels.name}
-                                    </h3>
-                                </div>
-                                {reels.upcoming && <span className="soon">Coming this season</span>}
-                            </div>
-                            <div className="reel" aria-hidden="true">
-                                {REEL_SCREENS.map((r) => (
-                                    <span key={r.tag} className="reel-f">
-                                        <span className="reel-tag">{r.tag}</span>
-                                        <span className="reel-art">
-                                            <Icon name={r.icon} variant={r.variant} size={38} />
-                                        </span>
-                                        <span className="reel-side">
-                                            <svg width="14" height="14" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"
-                                                    fill="#19F08B"
-                                                />
-                                            </svg>
-                                            <svg width="14" height="14" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M4 5h16v11H9l-5 4z"
-                                                    fill="none"
-                                                    stroke="#E9F3F1"
-                                                    strokeWidth="2"
-                                                />
-                                            </svg>
-                                            <svg width="14" height="14" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M4 12l16-8-6 16-3-6z"
-                                                    fill="none"
-                                                    stroke="#E9F3F1"
-                                                    strokeWidth="2"
-                                                />
-                                            </svg>
-                                        </span>
-                                        <span className="reel-cap">
-                                            <b />
-                                            <b />
-                                        </span>
-                                        <span className="reel-bar" />
-                                    </span>
-                                ))}
-                            </div>
-                            <p className="fog" style={{ margin: 0, maxWidth: "40ch" }}>
-                                {reels.desc}
-                            </p>
-                        </article>
-                    )}
                     {quant && (
                         <article
                             className="cell b-quant reveal"
@@ -1085,7 +1271,187 @@ export function Shipped({ projects }: { projects: ProjectMeta[] }) {
                             </div>
                         </article>
                     )}
-                    {rest.map((p) => (
+                    {ai && (
+                        <article
+                            className="cell b-ai reveal"
+                            style={{ background: "var(--grad)", color: "var(--ink)" }}
+                        >
+                            <CellHead kind={ai.kind} name={ai.name} dark={false} />
+                            <svg
+                                viewBox="0 0 320 90"
+                                width="100%"
+                                height="90"
+                                aria-hidden="true"
+                                style={{ overflow: "visible" }}
+                            >
+                                <path
+                                    className="ai-path"
+                                    d="M8 70C60 70 70 20 120 20S180 70 230 70 290 20 312 20"
+                                    fill="none"
+                                    stroke="#04140D"
+                                    strokeWidth="2.5"
+                                    strokeDasharray="6 7"
+                                />
+                                {[
+                                    [8, 70],
+                                    [120, 20],
+                                    [230, 70],
+                                    [312, 20],
+                                ].map(([x, y], i) => (
+                                    <circle
+                                        key={x}
+                                        cx={x}
+                                        cy={y}
+                                        r={i === 3 ? 9 : 6}
+                                        fill={i === 3 ? "#04140D" : "#E9F3F1"}
+                                        stroke="#04140D"
+                                        strokeWidth="2.5"
+                                    />
+                                ))}
+                            </svg>
+                            <p style={{ margin: 0, maxWidth: "40ch", fontWeight: 500 }}>
+                                {ai.desc}
+                            </p>
+                        </article>
+                    )}
+                    {restNow.map((p) => (
+                        <article
+                            key={p.key}
+                            className="cell b-any reveal"
+                            style={{ background: "var(--deep)" }}
+                        >
+                            <CellHead
+                                kind={p.kind}
+                                name={p.name}
+                                right={<Icon name="jelly" variant="g" size={44} />}
+                            />
+                            <p className="fog" style={{ margin: 0, maxWidth: "44ch" }}>
+                                {p.desc}
+                            </p>
+                        </article>
+                    ))}
+                </div>
+                <div className="bento-sub reveal">
+                    <h3 className="az" style={{ margin: 0, fontSize: "clamp(30px, 3.4vw, 48px)" }}>
+                        Coming this <span className="gtext">year</span>
+                    </h3>
+                    <p className="lead" style={{ margin: 0 }}>
+                        New projects starting in {CREW_SEASON}. Some take us outside ENSIA for the
+                        first time.
+                    </p>
+                </div>
+                <div className="g-bento">
+                    {fest && (
+                        <article
+                            className="cell b-fest reveal"
+                            style={{
+                                background:
+                                    "radial-gradient(60% 90% at 80% 100%, rgba(25,240,139,.12), transparent 70%), var(--deep)",
+                            }}
+                        >
+                            <div className="fest-row">
+                                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                                    <span className="mono fog">{fest.kind}</span>
+                                    <h3
+                                        className="xp"
+                                        style={{
+                                            margin: 0,
+                                            fontSize: "clamp(28px, 3vw, 44px)",
+                                            lineHeight: 1.05,
+                                        }}
+                                    >
+                                        {fest.name}
+                                    </h3>
+                                    <p className="fog" style={{ margin: 0, maxWidth: "44ch" }}>
+                                        {fest.desc}
+                                    </p>
+                                </div>
+                                <FestivalArt />
+                            </div>
+                        </article>
+                    )}
+                    {learn && (
+                        <article
+                            className="cell b-learn reveal"
+                            style={{ background: "var(--deep)" }}
+                        >
+                            <CellHead kind={learn.kind} name={learn.name} />
+                            <LearnArt />
+                            <p className="fog" style={{ margin: 0 }}>
+                                {learn.desc}
+                            </p>
+                        </article>
+                    )}
+                    {reach && (
+                        <article
+                            className="cell b-reach reveal"
+                            style={{ background: "var(--deep)" }}
+                        >
+                            <CellHead kind={reach.kind} name={reach.name} />
+                            <OutreachArt />
+                            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                                {reach.byline && (
+                                    <p className="gtext" style={{ margin: 0, fontWeight: 700 }}>
+                                        {reach.byline}
+                                    </p>
+                                )}
+                                <p className="fog" style={{ margin: 0 }}>
+                                    {reach.desc}
+                                </p>
+                            </div>
+                        </article>
+                    )}
+                    {reels && (
+                        <article
+                            className="cell b-reels reveal"
+                            style={{ background: "var(--trench)" }}
+                        >
+                            <CellHead kind={reels.kind} name={reels.name} />
+                            <div className="reel" aria-hidden="true">
+                                {REEL_SCREENS.map((r) => (
+                                    <span key={r.tag} className="reel-f">
+                                        <span className="reel-tag">{r.tag}</span>
+                                        <span className="reel-art">
+                                            <Icon name={r.icon} variant={r.variant} size={38} />
+                                        </span>
+                                        <span className="reel-side">
+                                            <svg width="14" height="14" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"
+                                                    fill="#19F08B"
+                                                />
+                                            </svg>
+                                            <svg width="14" height="14" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M4 5h16v11H9l-5 4z"
+                                                    fill="none"
+                                                    stroke="#E9F3F1"
+                                                    strokeWidth="2"
+                                                />
+                                            </svg>
+                                            <svg width="14" height="14" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M4 12l16-8-6 16-3-6z"
+                                                    fill="none"
+                                                    stroke="#E9F3F1"
+                                                    strokeWidth="2"
+                                                />
+                                            </svg>
+                                        </span>
+                                        <span className="reel-cap">
+                                            <b />
+                                            <b />
+                                        </span>
+                                        <span className="reel-bar" />
+                                    </span>
+                                ))}
+                            </div>
+                            <p className="fog" style={{ margin: 0, maxWidth: "40ch" }}>
+                                {reels.desc}
+                            </p>
+                        </article>
+                    )}
+                    {restSoon.map((p) => (
                         <article
                             key={p.key}
                             className="cell b-any reveal"
@@ -1280,9 +1646,12 @@ export function Feed({ club }: { club: Club }) {
                 <p className="fog" style={{ margin: 0, textAlign: "center", maxWidth: "48ch" }}>
                     Companies that sponsored, hosted or partnered with ETC events.
                 </p>
-                <ul className="trusted">
+                <ul className="trusted" style={{ "--n": PARTNERS.length } as React.CSSProperties}>
                     {PARTNERS.map((p) => (
-                        <li key={p.name} className="tlogo chamfer reveal">
+                        <li
+                            key={p.name}
+                            className={`tlogo chamfer reveal${p.tall ? " tlogo-tall" : ""}`}
+                        >
                             <Image
                                 src={p.src}
                                 alt={p.name}
@@ -1332,8 +1701,8 @@ export function Join({ club }: { club: Club }) {
                             lineHeight: 1.45,
                         }}
                     >
-                        Open to every university student. You don&apos;t need experience in
-                        your cell: Training Sessions start from zero. You need to show up.
+                        Open to every university student. You don&apos;t need experience in your
+                        cell: Training Sessions start from zero. You need to show up.
                     </p>
                     <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                         <Link className="btn btn-glow chamfer" href="/registrations">

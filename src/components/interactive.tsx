@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Arrow, Icon, Lockup, Social } from "@/components/ui";
 import { CELLS } from "@/data/cells";
 import { NAV } from "@/data/club";
@@ -122,59 +122,6 @@ export function MobileMenu({
                 </div>
             )}
         </>
-    );
-}
-
-/* ------------------------------------------------------------ newsletter */
-export function NewsletterForm() {
-    const [email, setEmail] = useState("");
-    const [state, setState] = useState<"idle" | "loading" | "ok" | "error">("idle");
-    async function submit(e: FormEvent) {
-        e.preventDefault();
-        if (!email.trim()) return;
-        setState("loading");
-        try {
-            const res = await fetch("/api/tx", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
-            });
-            if (!res.ok) throw new Error(String(res.status));
-            setState("ok");
-            setEmail("");
-        } catch (err) {
-            console.error(err);
-            setState("error");
-        }
-    }
-    return (
-        <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <label htmlFor="foss-email" style={{ fontWeight: 700, fontSize: 15 }}>
-                Email
-            </label>
-            <div style={{ display: "flex", gap: 8 }}>
-                <input
-                    id="foss-email"
-                    className="field-ink"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    placeholder="you@ensia.edu.dz"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <button type="submit" className="btn btn-ink" disabled={state === "loading"}>
-                    {state === "loading" ? "Sending" : "Subscribe"}
-                </button>
-            </div>
-            <p
-                aria-live="polite"
-                style={{ margin: 0, minHeight: 22, fontSize: 14, fontWeight: 600 }}
-            >
-                {state === "ok" && "Subscribed. Check your inbox."}
-                {state === "error" && "That did not work. Try again in a minute."}
-            </p>
-        </form>
     );
 }
 

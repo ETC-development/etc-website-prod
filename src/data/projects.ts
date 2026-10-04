@@ -1,6 +1,7 @@
 /**
  * Projects: what ETC runs all year, between the events. Shown in the bento grid on the home page.
  * A project with a matching custom cell in sections.tsx gets its own layout; any other key renders as a plain card.
+ * `upcoming` projects are grouped under "Coming this year".
  */
 
 export type ProjectMeta = {
@@ -55,6 +56,28 @@ export const PROJECTS: ProjectMeta[] = [
         desc: "One technology, one full day. Presentations first, to understand how it works and where it is used, then workshops where you build with it yourself. Some days are delivered and certified by the company behind the technology.",
     },
     {
+        key: "festival",
+        name: "Algerian Technology Festival",
+        kind: "National festival",
+        upcoming: true,
+        desc: "Students from all over Algeria bring what they built: robots, AI systems, apps, research projects and inventions. They set up a stand, show it working, and explain it to anyone who stops by.",
+    },
+    {
+        key: "learninghub",
+        name: "Learning Hub",
+        kind: "YouTube channel",
+        upcoming: true,
+        desc: "Students and teachers solve worksheets, explain modules, review exams and break down the hard concepts on video. The aim is a free CS & AI library any student in Algeria can learn from.",
+    },
+    {
+        key: "outreach",
+        name: "ETC Outreach",
+        kind: "School visits",
+        byline: "Taking CS & AI beyond the university",
+        upcoming: true,
+        desc: "We go to middle and high schools to show students AI, robotics and programming up close, what careers they lead to, and how to get there through university.",
+    },
+    {
         key: "techreels",
         name: "Tech Reels",
         kind: "Short-form video",
@@ -87,10 +110,11 @@ export const TECH_DAYS: {
         name: "NVIDIA Day",
         by: "With NVIDIA",
         desc: "Our annual deep learning workshop, delivered and certified by NVIDIA. You leave with an NVIDIA certificate.",
-        figure: ["2", "Editions"],
+        figure: ["NVIDIA", "Certificate"],
     },
     {
         name: "Blockchain Day",
+        by: "With ENSIA Teachers",
         desc: "A full day on blockchain: presentations on how it works and what it is used for, then hands-on workshops.",
         figure: ["1", "Edition"],
     },
