@@ -56,10 +56,10 @@ export const NAV = [
  * submissions..
  */
 export const REGISTRATION = {
-    open: false,
+    open: true,
     /** ISO date shown on the closed screen, or null while undecided. */
     opensAt: null as string | null,
     /** Shown on the "application received" screen. */
-    reviewWindow: "[DATE RANGE]",
-    resultsDate: "[DATE]",
+    reviewWindow: "Few days",
+    resultsDate: "Exact date will be announced on social media, stay tuned",
 };
