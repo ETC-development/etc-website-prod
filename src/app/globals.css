@@ -263,8 +263,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @keyframes eqb { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
 .spin { transform-box: view-box; transform-origin: 120px 120px; animation: spin 9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.field-ink { width: 100%; min-height: 50px; padding: 0 14px; border: 2px solid var(--ink); background: rgba(4, 20, 13, 0.08); color: var(--ink); font: inherit; font-size: 16px; }
-.field-ink::placeholder { color: rgba(4, 20, 13, 0.7); }
 
 /* ---------- divisions ---------- */
 .divs { display: flex; gap: 12px; height: 560px; }

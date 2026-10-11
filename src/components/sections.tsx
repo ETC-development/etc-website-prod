@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Arrow, Icon, Lockup, Social, type IconName, type SocialName } from "@/components/ui";
-import { Cells, CrewSection, MobileMenu, NewsletterForm, Universe } from "@/components/interactive";
+import { Cells, CrewSection, MobileMenu, Universe } from "@/components/interactive";
 import { Mascot } from "@/components/mascot";
 import { CELLS } from "@/data/cells";
 import { CREDITS, NAV, SITE, type Club } from "@/data/club";
@@ -742,7 +742,6 @@ export function Shipped({ projects }: { projects: ProjectMeta[] }) {
                             <p style={{ margin: 0, maxWidth: "38ch", fontWeight: 500 }}>
                                 {foss.desc}
                             </p>
-                            <NewsletterForm />
                         </article>
                     )}
                     {cast && (
