@@ -214,6 +214,10 @@ export function Footer({ club }: { club: Club }) {
                     <span className="mono fog">
                         © {new Date().getFullYear()} {SITE.fullName}
                     </span>
+                    <span className="mono credit" style={{ display: "flex", gap: 16 }}>
+                        <Link href="/privacy">Privacy</Link>
+                        <Link href="/terms">Terms</Link>
+                    </span>
                     {CREDITS.name && (
                         <span className="mono credit">
                             Site by{" "}

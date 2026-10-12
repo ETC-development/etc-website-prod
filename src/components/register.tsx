@@ -87,6 +87,16 @@ const BOTS = [
 const supabaseReady = () =>
     Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
+/** Explains a failed Google sign-in (`?auth=failed&reason=...`, set by the callback and proxy). */
+function signInFailure(reason: string) {
+    const r = reason.toLowerCase();
+    if (/admin|policy|access_denied|access denied|not allowed|blocked/.test(r))
+        return "Your school Google account blocked the sign-in. Please use a personal Gmail account instead.";
+    if (/database error|saving new user|unexpected_failure|server_error/.test(r))
+        return "We could not create your account with this Google address. Please try a personal Gmail account, or contact us on Discord.";
+    return "Google sign-in did not go through. Please try again, or use a personal Gmail account.";
+}
+
 export function RegisterFlow({ discordInvite }: { discordInvite: string }) {
     const [step, setStep] = useState(1);
     const [f, setF] = useState<Form>(EMPTY);
@@ -105,6 +115,11 @@ export function RegisterFlow({ discordInvite }: { discordInvite: string }) {
             if (saved) setF({ ...EMPTY, ...JSON.parse(saved) });
         } catch {
             /* private mode: start empty */
+        }
+        const params = new URLSearchParams(location.search);
+        if (params.get("auth") === "failed") {
+            setAuthError(signInFailure(params.get("reason") ?? ""));
+            history.replaceState(null, "", location.pathname);
         }
         if (!supabaseReady()) return;
         const supabase = createClientSupabaseClient();
@@ -722,7 +737,24 @@ export function RegisterFlow({ discordInvite }: { discordInvite: string }) {
                             </button>
                             <span id="agree-l" style={{ fontSize: 15, paddingTop: 3 }}>
                                 These answers are my own. I agree that the ETC team reviews them and
-                                contacts me by email or phone about my application.
+                                contacts me by email or phone about my application, as described in
+                                the{" "}
+                                <Link
+                                    href="/privacy"
+                                    target="_blank"
+                                    style={{ color: "var(--cyan)" }}
+                                >
+                                    Privacy Policy
+                                </Link>{" "}
+                                and{" "}
+                                <Link
+                                    href="/terms"
+                                    target="_blank"
+                                    style={{ color: "var(--cyan)" }}
+                                >
+                                    Terms of Service
+                                </Link>
+                                .
                             </span>
                         </div>
                         {err.agreed && (
