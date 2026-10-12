@@ -5,7 +5,15 @@
  */
 import type { IconName } from "@/components/ui";
 
-export type CellKey = "development" | "ai" | "design" | "multimedia" | "events" | "marketing" | "relex";
+export type CellKey =
+    | "development"
+    | "ai"
+    | "design"
+    | "multimedia"
+    | "production"
+    | "events"
+    | "marketing"
+    | "relex";
 
 export const CELLS: {
     key: CellKey;
@@ -36,7 +44,7 @@ export const CELLS: {
         photo: "/photos/ai-vision.webp",
         desc: "Takes what ENSIA teaches in lectures and makes you practise it: datasets, models, competitions. AI Journey is its training track.",
         does: ["AI Journey", "Models", "Datasets", "Competitions"],
-        apply: false,
+        apply: true,
     },
     {
         key: "design",
@@ -56,6 +64,16 @@ export const CELLS: {
         photo: "/photos/hall-wide.webp",
         desc: "Films, records and edits the club: event recaps, photography and ETCast. If it happened at ETC and you saw it online, this cell made it.",
         does: ["ETCast", "Recaps", "Photography", "Reels"],
+        apply: true,
+    },
+    {
+        key: "production",
+        name: "Production",
+        tag: "Editing",
+        icon: "production",
+        photo: "/photos/orange-team.webp",
+        desc: "The editing room. Marketing brings back the raw footage, Production cuts it into recaps, reels and promos, then hands it back ready to post. You learn the timeline, the pacing and the deadline.",
+        does: ["Video editing", "Recaps", "Promos", "Reels"],
         apply: true,
     },
     {

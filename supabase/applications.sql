@@ -10,13 +10,15 @@
 --   update public.registration_settings set is_open = false;  -- close
 -- Next season:
 --   update public.registration_settings set season = '2027/28', is_open = false;
+-- Already ran this file before the Production cell existed? Add it with:
+--   alter type public.cell add value if not exists 'production' after 'multimedia';
 -- =========================================================================
 
 -- Enums ------------------------------------------------------------------
 
 -- Keys match `CellKey` in src/data/cells.ts.
 create type public.cell as enum
-    ('development', 'ai', 'design', 'multimedia', 'events', 'marketing', 'relex');
+    ('development', 'ai', 'design', 'multimedia', 'production', 'events', 'marketing', 'relex');
 
 -- Values match SCHOOLS and LEVELS in src/data/cells.ts.
 create type public.school as enum

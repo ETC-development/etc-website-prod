@@ -381,7 +381,7 @@ textarea.inp { min-height: 132px; padding: 14px 16px; resize: vertical; line-hei
 .lv:hover { box-shadow: inset 0 0 0 1.5px var(--foam); }
 .lv[aria-checked="true"] { background: var(--grad); color: var(--ink); box-shadow: none; }
 .g2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
-.dgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.dgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .dc { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; min-height: 176px; padding: 20px 18px; border: 0; background: var(--deep); color: var(--foam); box-shadow: inset 0 0 0 1.5px var(--line); text-align: left; font: inherit; cursor: pointer; transition: box-shadow 0.25s, transform 0.25s var(--ease-out); }
 .dc:hover { box-shadow: inset 0 0 0 1.5px var(--foam); transform: translateY(-3px); }
 .dc[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--cyan), 0 0 30px rgba(18, 194, 240, 0.25); }

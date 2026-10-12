@@ -360,6 +360,7 @@ export interface Database {
         | "ai"
         | "design"
         | "multimedia"
+        | "production"
         | "events"
         | "marketing"
         | "relex"

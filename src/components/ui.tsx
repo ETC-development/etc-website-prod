@@ -25,6 +25,7 @@ export type IconName =
     | "mic"
     | "pin"
     | "plus"
+    | "production"
     | "trophy"
     | "users"
     | "workshop";

@@ -53,7 +53,7 @@ export const MANAGERS: CrewMember[] = [
     { name: "Asma HAMAMTI", role: "Multimedia Co-Manager", level: "3Y", photo: "/crew/asma-hamamti.webp", cell: "multimedia" },
     { name: "Zakaria Abdenour MEKKI", role: "Multimedia Co-Manager", level: "3Y", photo: "/crew/zakaria-abdenour-mekki.webp", cell: "multimedia" },
     { name: "Nour RAHIAOUI", role: "Multimedia Co-Manager", level: "3Y", photo: "/crew/nour-yahiaoui.webp", cell: "multimedia" },
-    { name: "Yousra BEDJGHIT", role: "Production Manager", level: "3Y", photo: "/crew/yousra-bedjghit.webp", cell: "multimedia" },
+    { name: "Yousra BEDJGHIT", role: "Production Manager", level: "3Y", photo: "/crew/yousra-bedjghit.webp", cell: "production" },
 
     { name: "Ayat-Errahmane NACER", role: "HR Lead", level: "4Y", photo: "/crew/ayat-errahmane-nacer.webp" },
         { name: "Maria Ines RAHEB", role: "HR Team", level: "3Y", photo: "/crew/maria-ines-raheb.webp" },
