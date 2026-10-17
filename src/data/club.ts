@@ -57,9 +57,17 @@ export const NAV = [
  */
 export const REGISTRATION = {
     open: true,
+    /** ISO date-time after which /registrations shows the closed screen, or null for no deadline. */
+    closesAt: "2026-10-17T20:00:00+01:00" as string | null,
     /** ISO date shown on the closed screen, or null while undecided. */
     opensAt: null as string | null,
     /** Shown on the "application received" screen. */
     reviewWindow: "Few days",
     resultsDate: "Exact date will be announced on social media, stay tuned",
 };
+
+/** Whether /registrations shows the form right now: the switch is on and the deadline has not passed. */
+export function registrationOpen(now = Date.now()) {
+    if (!REGISTRATION.open) return false;
+    return REGISTRATION.closesAt === null || now < Date.parse(REGISTRATION.closesAt);
+}

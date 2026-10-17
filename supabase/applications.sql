@@ -8,6 +8,7 @@
 -- Open or close applications:
 --   update public.registration_settings set is_open = true;   -- open
 --   update public.registration_settings set is_open = false;  -- close
+--   update public.registration_settings set closes_at = '2026-10-17 20:00+01';  -- close at a set time
 -- Next season:
 --   update public.registration_settings set season = '2027/28', is_open = false;
 -- Already ran this file before the Production cell existed? Add it with:
@@ -32,7 +33,9 @@ create type public.application_status as enum ('pending', 'accepted', 'rejected'
 create table public.registration_settings (
     id boolean primary key default true check (id), -- at most one row
     season text not null,
-    is_open boolean not null default false
+    is_open boolean not null default false,
+    -- Optional deadline: submissions are refused from this moment, even while is_open.
+    closes_at timestamptz
 );
 insert into public.registration_settings (season, is_open) values ('2026/27', false);
 
@@ -142,6 +145,7 @@ create policy "Applicants apply for themselves while registration is open"
         and exists (
             select 1 from public.registration_settings s
             where s.is_open and s.season = applications.season
+                and (s.closes_at is null or now() < s.closes_at)
         )
     );
 
