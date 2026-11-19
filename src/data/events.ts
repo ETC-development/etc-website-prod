@@ -67,7 +67,7 @@ export const SEASON_EVENTS: EventMeta[] = [
         glow: "rgba(19,181,185,.25)",
         when: "This season · 3 days",
         cover: "/brand/covers/exai.webp",
-        href: "https://exai-etc.vercel.app/",
+        href: "https://exai.etclub.online/",
         desc: "A high-level AI datathon for about 100 selected participants. Three days of Kaggle-style, research-grade challenges in deep learning, time series, computer vision, NLP and reinforcement learning, built to look like the problems industry actually has.",
     },
     {
